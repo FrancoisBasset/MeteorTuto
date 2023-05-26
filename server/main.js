@@ -1,5 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { TasksCollection } from '../imports/api/TasksCollection';
+import { Accounts } from 'meteor/accounts-base';
+import TasksCollection from '../imports/api/db/TasksCollection';
+import '../imports/api/tasksMethods';
+import '../imports/api/tasksPublications';
 
 const insertTask = taskText => TasksCollection.insert({text: taskText});
 
@@ -14,5 +17,12 @@ Meteor.startup(() => {
 			'Sixth Task',
 			'Seventh Task'
 		].forEach(insertTask);
+	}
+
+	if (!Accounts.findUserByUsername('meteorite')) {
+		Accounts.createUser({
+			username: 'meteorite',
+			password: 'password'
+		});
 	}
 });
